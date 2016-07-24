@@ -47,6 +47,24 @@ class Normalizer:
         num_regexp = re.compile("[0-9]+\.?[0-9]*")
         return num_regexp.sub("NUM", line)
 
+    def replace_phone_number(self, line):
+        """
+        replace phone number with PHONE. Phone number may be in format
+        8 (nnn) nnn-nn-nn
+        or +nnn (nnn) nnn-nn-nn
+        and some other
+        :param line: line with (or without) numbers
+        :type line: str
+        :return:
+        """
+        country_code = "([\+[0-9]+|8])"
+        operator_code = "([0-9]{3}|\([0-9]{3}\))"
+        sep = "([\s\- ]?)"
+        phone = country_code + sep + operator_code + sep + "([0-9]{3})" + sep + "([0-9]{2})" + sep + "([0-9]{2})"
+        print(phone)
+        phone_num_regexp = re.compile(phone)
+        return phone_num_regexp.sub("PHONE", line)
+
     def replace_url(self, line):
         """
         replace url with URL
