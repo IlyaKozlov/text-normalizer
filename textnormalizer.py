@@ -86,3 +86,10 @@ class Normalizer:
         """
         non_letters = re.compile("\W+")
         return non_letters.sub(" ", line).strip()
+
+    def normalize(self, line):
+        for method in [str.lower, self.replace_phone_number, self.replace_time, self.replace_number, self.replace_url,
+                       self.replace_smile, self.replace_non_letters]:
+            line = method(line)
+        return line
+
