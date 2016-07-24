@@ -61,7 +61,6 @@ class Normalizer:
         operator_code = "([0-9]{3}|\([0-9]{3}\))"
         sep = "([\s\- ]?)"
         phone = country_code + sep + operator_code + sep + "([0-9]{3})" + sep + "([0-9]{2})" + sep + "([0-9]{2})"
-        print(phone)
         phone_num_regexp = re.compile(phone)
         return phone_num_regexp.sub("PHONE", line)
 
