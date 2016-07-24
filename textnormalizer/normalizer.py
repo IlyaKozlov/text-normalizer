@@ -1,5 +1,6 @@
 import re
 
+
 class Normalizer:
     """
     perform simple rule based text normalization:
@@ -25,6 +26,17 @@ class Normalizer:
         line = fun_smile_regexp.sub("FUN_SMILE", line)
         return line
 
+    def replace_time(self, line):
+        """
+        replace time in format hh:mm or hh-mm with TIME
+        regexp borrowed from http://stackoverflow.com/questions/7536755/regular-expression-for-matching-hhmm-time-format
+        :param line: line with (or without) numbers
+        :type line: str
+        :return:
+        """
+        time_regexp = re.compile("([0-9]|0[0-9]|1[0-9]|2[0-3])(:|-)[0-5][0-9]")
+        return time_regexp.sub("TIME", line)
+
     def replace_number(self, line):
         """
         replace number with NUM
@@ -33,7 +45,6 @@ class Normalizer:
         :return:
         """
         num_regexp = re.compile("[0-9]+\.?[0-9]*")
-        # TODO add phone number and data regexp
         return num_regexp.sub("NUM", line)
 
     def replace_url(self, line):
@@ -57,6 +68,3 @@ class Normalizer:
         """
         non_letters = re.compile("\W+")
         return non_letters.sub(" ", line).strip()
-
-
-
